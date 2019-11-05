@@ -3,30 +3,35 @@ import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class Drug extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: this.props.name,
-            prize: this.props.prize,
-            description: this.props.description,
-            imageUrl: this.props.imageUrl,
-            producer: this.props.producer,           
-        }
+function Drug(props) {
+    return (
+        <h1>ELLLLLO { props.value }!</h1>
+    );
+}
+
+class DrugList extends React.Component {
+    renderDrug(i) {
+        return (
+            <Drug value={ i } />
+        );
+    }
+
+    render() {
+        return (
+            <div>
+                { this.renderDrug(1) }
+                { this.renderDrug(2) }
+                { this.renderDrug(3) }
+            </div>
+        );
+        
     }
 }
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: [{
-                squares: Array(9).fill(null),
-            }],
-            stepNumber: 0,
-            xIsNext: true,
-        }
-    }
+function App(props) {
+    return (
+        <DrugList />
+    );
 }
 
 ReactDOM.render(
