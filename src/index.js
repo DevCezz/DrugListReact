@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import exampleData from './components/drugs';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Drug(props) {
     return (
-        <h1>ELLLLLO { props.value }!</h1>
+        <h1>ELLLLLO { exampleData.drugs[props.value].name }!</h1>
     );
 }
 
@@ -17,14 +18,17 @@ class DrugList extends React.Component {
     }
 
     render() {
+        const numbers = [0, 1, 2];
+
         return (
             <div>
-                { this.renderDrug(1) }
-                { this.renderDrug(2) }
-                { this.renderDrug(3) }
+                { numbers.map((number) => {
+                    return (
+                        <Drug value={ number } />
+                    );
+                }) }
             </div>
         );
-        
     }
 }
 
