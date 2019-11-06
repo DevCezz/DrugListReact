@@ -10,9 +10,10 @@ export class DrugRow extends React.Component {
 
         return (
             <tr>
-                <td>{ drug.id }</td>
+                <th scope="row">{ drug.id }</th>
                 <td>{ drug.name }</td>
-                <td>{ drug.price }</td>
+                <td>{ drug.price } zł</td>
+                <td>{ drug.producer }</td>
             </tr>
         );
     }

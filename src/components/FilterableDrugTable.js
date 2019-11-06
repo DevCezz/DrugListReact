@@ -16,7 +16,7 @@ export class FilterableDrugTable extends React.Component {
 
     render() {
         return (
-            <div>
+            <div class="container my-5">
                 <ControlBar />     
                 <DrugTable drugs={ this.state.drugs }/>
                 <DrugWindow />

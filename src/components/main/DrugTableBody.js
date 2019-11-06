@@ -11,7 +11,7 @@ export class DrugTableBody extends React.Component {
         return (
             <tbody>
                 { this.props.drugs.map((drug) => {
-                    return (<DrugRow drug={ drug }/>)
+                    return (<DrugRow key={ drug.id } drug={ drug }/>)
                 }) }
             </tbody>
         );
