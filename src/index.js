@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { FilterableDrugTable } from './components/FilterableDrugTable';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
