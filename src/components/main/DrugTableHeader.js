@@ -2,7 +2,7 @@ import React from 'react';
 
 export function DrugTableHeader(props) {
     return (
-        <thead class="thead-light">
+        <thead className="thead-light">
             <tr>
                 <th scope="col">Lp.</th>
                 <th scope="col">Nazwa</th>

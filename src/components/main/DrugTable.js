@@ -10,7 +10,7 @@ export class DrugTable extends React.Component {
 
     render() {
         return (
-            <table class="table table-hover mt-3">
+            <table className="table table-hover mt-3">
                 <DrugTableHeader />
                 <DrugTableBody drugs={ this.props.drugs } />
             </table>
