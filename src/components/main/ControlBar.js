@@ -9,7 +9,7 @@ export class ControlBar extends React.Component {
         return (
             <div>
                 <div className="d-flex justify-content-between align-items-start mb-4">
-                    <button type="button" className="btn btn-success" onClick={ this.props.onClickAdd }>Dodaj</button>
+                    <button type="button" id="addDrugBtn" className="btn btn-success" data-toggle="modal" data-target="#drugModalForm" >Dodaj</button>
                     
                     <div class="row m-0">
                         <label class="col-lg-3 col-form-label form-control-label text-right px-3">Cena: </label>
