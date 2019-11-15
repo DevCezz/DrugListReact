@@ -6,13 +6,91 @@ import { DrugTableBody } from './DrugTableBody';
 export class DrugTable extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            drugs: this.props.drugs,
+            idAsc: false,
+            nameAsc: true,
+            priceAsc: true,
+            producerAsc: true,
+        }
+
+        this.filterById = this.filterById.bind(this);
+        this.filterByName = this.filterByName.bind(this);
+        this.filterByPrice = this.filterByPrice.bind(this);
+        this.filterByProducer = this.filterByProducer.bind(this);
+    }
+
+    filterById() {
+        this.setState({
+            idAsc: !this.state.idAsc,
+        });
+
+        if(this.state.idAsc) {
+            this.setState(prevState => {
+                this.state.drugs.sort((a, b) => (a.id > b.id)
+            )});
+        } else {
+            this.setState(prevState => {
+                this.state.drugs.sort((a, b) => (b.id > a.id)
+            )});
+        }
+    }
+
+    filterByName() {
+        this.setState({
+            nameAsc: !this.state.nameAsc,
+        });
+
+        if(this.state.nameAsc) {
+            this.setState(prevState => {
+                this.state.drugs.sort((a, b) => (a.name > b.name)
+            )});
+        } else {
+            this.setState(prevState => {
+                this.state.drugs.sort((a, b) => (b.name > a.name)
+            )});
+        }
+    }
+
+    filterByPrice() {
+        this.setState({
+            priceAsc: !this.state.priceAsc,
+        });
+
+        if(this.state.priceAsc) {
+            this.setState(prevState => {
+                this.state.drugs.sort((a, b) => (a.price > b.price)
+            )});
+        } else {
+            this.setState(prevState => {
+                this.state.drugs.sort((a, b) => (b.price > a.price)
+            )});
+        }
+    }
+
+    filterByProducer() {
+        this.setState({
+            producerAsc: !this.state.producerAsc,
+        });
+
+        if(this.state.producerAsc) {
+            this.setState(prevState => {
+                this.state.drugs.sort((a, b) => (a.producer > b.producer)
+            )});
+        } else {
+            this.setState(prevState => {
+                this.state.drugs.sort((a, b) => (b.producer > a.producer)
+            )});
+        }
     }
 
     render() {
         return (
             <table className="table table-hover mt-3">
-                <DrugTableHeader />
-                <DrugTableBody drugs={ this.props.drugs } />
+                <DrugTableHeader filterById={ this.filterById } filterByName={ this.filterByName } filterByPrice={ this.filterByPrice } 
+                    filterByProducer={ this.filterByProducer } drugs={ this.state.drugs } />
+                <DrugTableBody drugs={ this.state.drugs } />
             </table>
         );
     }
