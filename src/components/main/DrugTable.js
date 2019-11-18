@@ -30,11 +30,11 @@ export class DrugTable extends React.Component {
 
         if(this.state.ascFilter) {
             this.setState(prevState => {
-                this.state.drugs.sort((a, b) => (a.id > b.id)
+                this.state.drugs.sort((a, b) => (a.id - b.id)
             )});
         } else {
             this.setState(prevState => {
-                this.state.drugs.sort((a, b) => (b.id > a.id)
+                this.state.drugs.sort((a, b) => (b.id - a.id)
             )});
         }
     }
@@ -44,11 +44,11 @@ export class DrugTable extends React.Component {
 
         if(this.state.ascFilter) {
             this.setState(prevState => {
-                this.state.drugs.sort((a, b) => (a.name > b.name)
+                this.state.drugs.sort((a, b) => (a.name.localeCompare(b.name))
             )});
         } else {
             this.setState(prevState => {
-                this.state.drugs.sort((a, b) => (b.name > a.name)
+                this.state.drugs.sort((a, b) => (b.name.localeCompare(a.name))
             )});
         }
     }
@@ -58,11 +58,11 @@ export class DrugTable extends React.Component {
 
         if(this.state.ascFilter) {
             this.setState(prevState => {
-                this.state.drugs.sort((a, b) => (a.price > b.price)
+                this.state.drugs.sort((a, b) => (a.price - b.price)
             )});
         } else {
             this.setState(prevState => {
-                this.state.drugs.sort((a, b) => (b.price > a.price)
+                this.state.drugs.sort((a, b) => (b.price - a.price)
             )});
         }
     }
@@ -72,11 +72,11 @@ export class DrugTable extends React.Component {
 
         if(this.state.ascFilter) {
             this.setState(prevState => {
-                this.state.drugs.sort((a, b) => (a.producer > b.producer)
+                this.state.drugs.sort((a, b) => (a.producer.localeCompare(b.producer))
             )});
         } else {
             this.setState(prevState => {
-                this.state.drugs.sort((a, b) => (b.producer > a.producer)
+                this.state.drugs.sort((a, b) => (b.producer.localeCompare(a.producer))
             )});
         }
     }
