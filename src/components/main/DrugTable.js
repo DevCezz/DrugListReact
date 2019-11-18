@@ -9,24 +9,26 @@ export class DrugTable extends React.Component {
 
         this.state = {
             drugs: this.props.drugs,
-            idAsc: false,
-            nameAsc: true,
-            priceAsc: true,
-            producerAsc: true,
+            ascFilter: false,
         }
 
         this.filterById = this.filterById.bind(this);
         this.filterByName = this.filterByName.bind(this);
         this.filterByPrice = this.filterByPrice.bind(this);
         this.filterByProducer = this.filterByProducer.bind(this);
+        this.changeAscFilter = this.changeAscFilter.bind(this);
+    }
+
+    changeAscFilter() {
+        this.setState({
+            ascFilter: !this.state.ascFilter,
+        });
     }
 
     filterById() {
-        this.setState({
-            idAsc: !this.state.idAsc,
-        });
+        this.changeAscFilter();
 
-        if(this.state.idAsc) {
+        if(this.state.ascFilter) {
             this.setState(prevState => {
                 this.state.drugs.sort((a, b) => (a.id > b.id)
             )});
@@ -38,11 +40,9 @@ export class DrugTable extends React.Component {
     }
 
     filterByName() {
-        this.setState({
-            nameAsc: !this.state.nameAsc,
-        });
+        this.changeAscFilter();
 
-        if(this.state.nameAsc) {
+        if(this.state.ascFilter) {
             this.setState(prevState => {
                 this.state.drugs.sort((a, b) => (a.name > b.name)
             )});
@@ -54,11 +54,9 @@ export class DrugTable extends React.Component {
     }
 
     filterByPrice() {
-        this.setState({
-            priceAsc: !this.state.priceAsc,
-        });
+        this.changeAscFilter();
 
-        if(this.state.priceAsc) {
+        if(this.state.ascFilter) {
             this.setState(prevState => {
                 this.state.drugs.sort((a, b) => (a.price > b.price)
             )});
@@ -70,11 +68,9 @@ export class DrugTable extends React.Component {
     }
 
     filterByProducer() {
-        this.setState({
-            producerAsc: !this.state.producerAsc,
-        });
+        this.changeAscFilter();
 
-        if(this.state.producerAsc) {
+        if(this.state.ascFilter) {
             this.setState(prevState => {
                 this.state.drugs.sort((a, b) => (a.producer > b.producer)
             )});
@@ -89,7 +85,7 @@ export class DrugTable extends React.Component {
         return (
             <table className="table table-hover mt-3">
                 <DrugTableHeader filterById={ this.filterById } filterByName={ this.filterByName } filterByPrice={ this.filterByPrice } 
-                    filterByProducer={ this.filterByProducer } drugs={ this.state.drugs } />
+                    filterByProducer={ this.filterByProducer } />
                 <DrugTableBody drugs={ this.state.drugs } />
             </table>
         );
