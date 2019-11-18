@@ -12,11 +12,11 @@ export class DrugTable extends React.Component {
             ascFilter: false,
         }
 
+        this.changeAscFilter = this.changeAscFilter.bind(this);
         this.filterById = this.filterById.bind(this);
         this.filterByName = this.filterByName.bind(this);
         this.filterByPrice = this.filterByPrice.bind(this);
         this.filterByProducer = this.filterByProducer.bind(this);
-        this.changeAscFilter = this.changeAscFilter.bind(this);
     }
 
     changeAscFilter() {
