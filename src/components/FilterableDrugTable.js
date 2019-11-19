@@ -1,26 +1,27 @@
-import React from 'react';
-import data from '../db/drugs.json';
+import React, { useState, useRef, useCallback } from 'react';
 
 import { ControlBar } from './main/ControlBar';
 import { DrugTable } from './main/DrugTable';
 import { DrugWindow } from './modal/DrugWindow';
 
-export class FilterableDrugTable extends React.Component {
-    constructor(props) {
-        super(props);
+export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
+    console.log(initialDrugs);
+    const [drugs, setDrugs] = useState(initialDrugs.concat());
+    const [modalWindowTitle, setModalWindowTitle] = useState('Dodaj lek');
+    const [submitBtnText, setSubmitBtnText] = useState('Dodaj');
 
-        this.state = {
-            drugs: data.drugs,
-        };
-    }
+    const addDrug = useCallback((drug) => {
+        setDrugs(drugs.concat({
+            ...drug,
+            id: Math.max(...drugs.map(d => d.id)) + 1,
+        }));
+    }, [ drugs ]);
 
-    render() {
-        return (
-            <div className="container my-5">
-                <ControlBar />     
-                <DrugTable drugs={ this.state.drugs } />
-                <DrugWindow show={ this.state.windowDisplayed } />
-            </div>
-        );
-    }
+    return (
+        <div className="container my-5">
+            <ControlBar setSubmitBtnText={ setSubmitBtnText } />     
+            <DrugTable drugs={ drugs } setSubmitBtnText={ setSubmitBtnText } />
+            <DrugWindow onSubmitDrug={ addDrug } submitbtnText={ submitBtnText } modalWindowTitle={ modalWindowTitle } />
+        </div>
+    );
 }

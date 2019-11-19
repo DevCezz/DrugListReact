@@ -9,6 +9,7 @@ export function DrugTableHeader(props) {
                 <th className="filterableColumn" onClick={ props.filterByName } scope="col">Nazwa</th>
                 <th className="filterableColumn" onClick={ props.filterByPrice } scope="col">Cena</th>
                 <th className="filterableColumn" onClick={ props.filterByProducer } scope="col">Producent</th>
+                <th scope="col">Operacje</th>
             </tr>
         </thead>
     );

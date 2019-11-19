@@ -14,6 +14,7 @@ export class DrugRow extends React.Component {
                 <td>{ drug.name }</td>
                 <td>{ drug.price } zł</td>
                 <td>{ drug.producer }</td>
+                <td><button className="btn btn-warning mr-2">Edytuj</button><button className="btn btn-danger">Usuń</button></td>
             </tr>
         );
     }
