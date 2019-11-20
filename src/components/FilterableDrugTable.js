@@ -5,7 +5,6 @@ import { DrugTable } from './main/DrugTable';
 import { DrugWindow } from './modal/DrugWindow';
 
 export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
-    console.log(initialDrugs);
     const [drugs, setDrugs] = useState(initialDrugs.concat());
     const [modalWindowTitle, setModalWindowTitle] = useState('Dodaj lek');
     const [submitBtnText, setSubmitBtnText] = useState('Dodaj');
