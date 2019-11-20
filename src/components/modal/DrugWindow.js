@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useForm } from '../../hooks/useForm';
 
-export const DrugWindow = ({ onSubmitDrug, submitBtnText, modalWindowTitle }) => {
+export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle }) => {
     const [drugForm, change, resetDrugForm] = useForm({
         name: '',
         price: 0,
@@ -26,7 +26,7 @@ export const DrugWindow = ({ onSubmitDrug, submitBtnText, modalWindowTitle }) =>
         drugEffect: ''
     });
 
-    const sumbitDrug = () => {
+    const submitDrug = () => {
         onSubmitDrug({ ...drugForm });
         resetDrugForm();
     }
@@ -196,10 +196,10 @@ export const DrugWindow = ({ onSubmitDrug, submitBtnText, modalWindowTitle }) =>
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" onClick={ sumbitDrug } className="btn btn-warning">{ submitBtnText }</button>
+                        <button type="button" onClick={ submitDrug } className="btn btn-warning">{ submitBtnText }</button>
                     </div>
                 </div>
             </div>
         </div>
     );  
-};
+});
