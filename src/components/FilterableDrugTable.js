@@ -18,10 +18,14 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
         }));
     }, [ drugs ]);
 
+    const deleteDrug = useCallback((drugId) => {
+        setDrugs(drugs.filter(drug => drug.id !== drugId));
+    }, [drugs]);
+
     return (
         <div className="container my-5">
             <ControlBar setSubmitBtnText={ setSubmitBtnText } />     
-            <DrugTable drugs={ drugs } setSubmitBtnText={ setSubmitBtnText } setDrugs={ setDrugs } />
+            <DrugTable drugs={ drugs } setSubmitBtnText={ setSubmitBtnText } setDrugs={ setDrugs } onDeleteDrug={ deleteDrug } />
             <DrugWindow onSubmitDrug={ addDrug } submitBtnText={ submitBtnText } modalWindowTitle={ modalWindowTitle } />
         </div>
     );
