@@ -8,20 +8,12 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
         description: '',
         imageUrl: '',
         producer: '',
-        activeSubstances: [
-            {
-                name: '',
-                amount: ''
-            },
-            {
-                name: '',
-                amount: ''
-            },
-            {
-                name: '',
-                amount: ''
-            }
-        ],
+        sub1name: '',
+        sub1amount: 0,
+        sub2name: '',
+        sub2amount: 0,
+        sub3name: '',
+        sub3amount: 0,
         formulation: '',
         drugEffect: ''
     });
@@ -50,7 +42,7 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Nazwa leku" 
                                         aria-label="Nazwa leku" aria-describedby="drugName" 
-                                        name="drugName"
+                                        name="name"
                                         value={ drugForm.name }
                                         onChange={ change } />
                                 </div>
@@ -58,9 +50,9 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     <div className="input-group-prepend">
                                         <span className="input-group-text" id="drugPrice">Cena</span>
                                     </div>
-                                    <input type="number" className="form-control" placeholder="Cena" 
+                                    <input type="number" step="0.01" min="0" className="form-control" placeholder="Cena" 
                                         aria-label="Cena" aria-describedby="drugPrice" 
-                                        name="drugPrice"
+                                        name="price"
                                         value={ drugForm.price }
                                         onChange={ change } />
                                 </div>
@@ -71,7 +63,7 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                         <span className="input-group-text">Opis leku</span>
                                     </div>
                                     <textarea className="form-control" aria-label="Opis leku"
-                                        name="drugDescription"
+                                        name="description"
                                         value={ drugForm.description }
                                         onChange={ change } >                    
                                     </textarea>
@@ -84,7 +76,7 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Obraz URL" 
                                         aria-label="Obraz URL" aria-describedby="drugImageUrl" 
-                                        name="drugImageUrl"
+                                        name="imageUrl"
                                         value={ drugForm.imageUrl }
                                         onChange={ change } />
                                 </div>
@@ -96,7 +88,7 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Producent" 
                                         aria-label="Producent" aria-describedby="drugProducer" 
-                                        name="drugProducer"
+                                        name="producer"
                                         value={ drugForm.producer }
                                         onChange={ change } />
                                 </div>
@@ -106,7 +98,7 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Postać leku" 
                                         aria-label="Postać leku" aria-describedby="drugFormulation" 
-                                        name="drugFormulation" 
+                                        name="formulation" 
                                         value={ drugForm.formulation }
                                         onChange={ change } />
                                 </div>
@@ -119,18 +111,18 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Nazwa" 
                                         aria-label="Nazwa" aria-describedby="drugActiveSubstanceName1"
-                                        name="drugActiveSubstanceName1" 
-                                        value={ drugForm.activeSubstances[0].name }
+                                        name="sub1name" 
+                                        value={ drugForm.sub1name }
                                         onChange={ change } />
                                 </div>
                                 <div className="input-group input-group-sm col-sm">
                                     <div className="input-group-prepend">
                                         <span className="input-group-text" id="drugActiveSubstanceAmount1">Ilość</span>
                                     </div>
-                                    <input type="text" className="form-control" placeholder="Ilość" 
+                                    <input className="form-control" placeholder="Ilość" 
                                         aria-label="Ilość" aria-describedby="drugActiveSubstanceAmount1" 
-                                        name="drugActiveSubstanceAmount1"
-                                        value={ drugForm.activeSubstances[0].amount }
+                                        name="sub1amount"
+                                        value={ drugForm.sub1amount }
                                         onChange={ change } />
                                 </div>
                             </div>
@@ -142,8 +134,8 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Nazwa" 
                                         aria-label="Nazwa" aria-describedby="drugActiveSubstanceName2" 
-                                        name="drugActiveSubstanceName2" 
-                                        value={ drugForm.activeSubstances[1].name }
+                                        name="sub2name" 
+                                        value={ drugForm.sub2name }
                                         onChange={ change } />
                                 </div>
                                 <div className="input-group input-group-sm col-sm">
@@ -152,8 +144,8 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Ilość" 
                                         aria-label="Ilość" aria-describedby="drugActiveSubstanceAmount2" 
-                                        name="drugActiveSubstanceAmount2"
-                                        value={ drugForm.activeSubstances[1].amount }
+                                        name="sub2amount"
+                                        value={ drugForm.sub2amount }
                                         onChange={ change } />
                                 </div>
                             </div>
@@ -165,8 +157,8 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Nazwa" 
                                         aria-label="Nazwa" aria-describedby="drugActiveSubstanceName3" 
-                                        name="drugActiveSubstanceName3"
-                                        value={ drugForm.activeSubstances[2].name }
+                                        name="sub3name"
+                                        value={ drugForm.sub3name }
                                         onChange={ change } />
                                 </div>
                                 <div className="input-group input-group-sm col-sm">
@@ -175,8 +167,8 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                                     </div>
                                     <input type="text" className="form-control" placeholder="Ilość" 
                                         aria-label="Ilość" aria-describedby="drugActiveSubstanceAmount3"
-                                        name="drugActiveSubstanceAmount3" 
-                                        value={ drugForm.activeSubstances[2].amount }
+                                        name="sub3amount" 
+                                        value={ drugForm.sub3amount }
                                         onChange={ change } />
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { ControlBar } from './main/ControlBar';
 import { DrugTable } from './main/DrugTable';
@@ -20,7 +20,7 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
         <div className="container my-5">
             <ControlBar setSubmitBtnText={ setSubmitBtnText } />     
             <DrugTable drugs={ drugs } setSubmitBtnText={ setSubmitBtnText } />
-            <DrugWindow onSubmitDrug={ addDrug } submitbtnText={ submitBtnText } modalWindowTitle={ modalWindowTitle } />
+            <DrugWindow onSubmitDrug={ addDrug } submitBtnText={ submitBtnText } modalWindowTitle={ modalWindowTitle } />
         </div>
     );
 }
