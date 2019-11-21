@@ -188,7 +188,7 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle 
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" onClick={ submitDrug } className="btn btn-warning">{ submitBtnText }</button>
+                        <button type="button" onClick={ submitDrug } className="btn btn-warning" data-dismiss="modal">{ submitBtnText }</button>
                     </div>
                 </div>
             </div>

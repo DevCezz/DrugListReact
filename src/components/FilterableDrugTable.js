@@ -10,7 +10,9 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
     const [submitBtnText, setSubmitBtnText] = useState('Dodaj');
 
     const addDrug = useCallback((drug) => {
-        setDrugs(drugs.concat({
+        const orderedDrugs = drugs.sort((a, b) => (a.id - b.id));
+
+        setDrugs(orderedDrugs.concat({
             ...drug,
             id: Math.max(...drugs.map(d => d.id)) + 1,
         }));
@@ -19,7 +21,7 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
     return (
         <div className="container my-5">
             <ControlBar setSubmitBtnText={ setSubmitBtnText } />     
-            <DrugTable drugs={ drugs } setSubmitBtnText={ setSubmitBtnText } />
+            <DrugTable drugs={ drugs } setSubmitBtnText={ setSubmitBtnText } setDrugs={ setDrugs } />
             <DrugWindow onSubmitDrug={ addDrug } submitBtnText={ submitBtnText } modalWindowTitle={ modalWindowTitle } />
         </div>
     );
