@@ -10,6 +10,7 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
     const [drugs, setDrugs] = useState(initialDrugs.concat());
     const [modalWindowTitle, setModalWindowTitle] = useState('Dodaj lek');
     const [submitBtnText, setSubmitBtnText] = useState('Dodaj');
+    const [exisitngId, setExisitngId] = useState(-1);
 
     const [drugForm, change, setDrugForm, resetDrugForm] = useForm({
         name: '',
@@ -27,6 +28,10 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
         drugEffect: ''
     });
 
+    const deleteDrug = useCallback((drugId) => {
+        setDrugs(drugs.filter(drug => drug.id !== drugId));
+    }, [ drugs ]);
+
     const addDrug = useCallback((drug) => {
         const orderedDrugs = drugs.sort((a, b) => (a.id - b.id));
 
@@ -36,19 +41,6 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
         }));
     }, [ drugs ]);
 
-    const showFormEditDrug = useCallback((drugId) => {
-        const drug = drugs.find(d => d.id === drugId);
-        setDrugForm(drug);
-        setModalWindowTitle('Edytuj lek: ' + drug.name);
-        setSubmitBtnText('Zatwierdź');
-    }, [ drugs ]);
-
-    const showFormAddDrug = useCallback(() => {
-        resetDrugForm();
-        setModalWindowTitle('Dodaj nowy lek');
-        setSubmitBtnText('Dodaj');
-    });
-
     const replaceDrug = useCallback((drug) => {
         const actualDrugs = drugs.concat();
         const drugIndex = actualDrugs.findIndex(d => d.id === drug.id);
@@ -56,16 +48,27 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
         setDrugs(actualDrugs);
     }, [ drugs ]);
 
-    const deleteDrug = useCallback((drugId) => {
-        setDrugs(drugs.filter(drug => drug.id !== drugId));
+    const showFormAddDrug = useCallback(() => {
+        setExisitngId(-1);
+        resetDrugForm();
+        setModalWindowTitle('Dodaj nowy lek');
+        setSubmitBtnText('Dodaj');
+    });
+
+    const showFormEditDrug = useCallback((drugId) => {
+        const drug = drugs.find(d => d.id === drugId);
+        setExisitngId(drugId);
+        setDrugForm(drug);
+        setModalWindowTitle('Edytuj lek: ' + drug.name);
+        setSubmitBtnText('Zatwierdź');
     }, [ drugs ]);
 
     return (
         <div className="container my-5">
             <ControlBar showFormAddDrug={ showFormAddDrug } />
             <DrugTable drugs={ drugs } setDrugs={ setDrugs } onDeleteDrug={ deleteDrug } showFormEditDrug={ showFormEditDrug } />
-            <DrugWindow onSubmitDrug={ addDrug } submitBtnText={ submitBtnText } modalWindowTitle={ modalWindowTitle }
-                drugForm={ drugForm } change={ change } />
+            <DrugWindow exisitngId={ exisitngId } onAddDrug={ addDrug } onEditDrug={ replaceDrug } submitBtnText={ submitBtnText } 
+                modalWindowTitle={ modalWindowTitle } drugForm={ drugForm } change={ change } />
         </div>
     );
 }

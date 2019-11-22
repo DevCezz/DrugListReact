@@ -1,8 +1,17 @@
 import React, { memo } from 'react';
 
-export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle, drugForm, change }) => {
+export const DrugWindow = memo(({ exisitngId, onAddDrug, onEditDrug, submitBtnText, modalWindowTitle, drugForm, change }) => {
     const submitDrug = () => {
-        onSubmitDrug({ ...drugForm });
+        if(exisitngId === -1) {
+            onAddDrug({
+                ...drugForm
+            });
+        } else {
+            onEditDrug({ 
+                ...drugForm,
+                id: exisitngId,
+            });
+        }
     }
 
     return (
@@ -16,6 +25,8 @@ export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle,
                         </button>
                     </div>
                     <div className="modal-body">
+                        <input type="hidden" name="id" value={ drugForm.id } />
+
                         <div className="container-fluid">
                             <div className="row mb-3">
                                 <div className="input-group input-group-sm col-sm">
