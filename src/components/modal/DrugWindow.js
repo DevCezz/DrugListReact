@@ -1,48 +1,8 @@
 import React, { memo } from 'react';
-import { useForm } from '../../hooks/useForm';
 
-export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle, editDrug }) => {
-    var drug = {};
-
-    if(editDrug) {
-        drug = {
-            name: editDrug.name,
-            price: editDrug.price,
-            description: editDrug.description,
-            imageUrl: editDrug.imageUrl,
-            producer: editDrug.producer,
-            sub1name: editDrug.sub1name,
-            sub1amount: editDrug.sub1amount,
-            sub2name: editDrug.sub2name,
-            sub2amount: editDrug.sub2amount,
-            sub3name: editDrug.sub3name,
-            sub3amount: editDrug.sub3amount,
-            formulation: editDrug.formulation,
-            drugEffect: editDrug.drugEffect
-        }
-    } else {
-        drug = {
-            name: '',
-            price: 0,
-            description: '',
-            imageUrl: '',
-            producer: '',
-            sub1name: '',
-            sub1amount: 0,
-            sub2name: '',
-            sub2amount: 0,
-            sub3name: '',
-            sub3amount: 0,
-            formulation: '',
-            drugEffect: ''
-        }
-    }
-
-    const [drugForm, change, resetDrugForm] = useForm(drug);
-
+export const DrugWindow = memo(({ onSubmitDrug, submitBtnText, modalWindowTitle, drugForm, change }) => {
     const submitDrug = () => {
         onSubmitDrug({ ...drugForm });
-        resetDrugForm();
     }
 
     return (

@@ -10,5 +10,5 @@ export const useForm = (initialForm) => {
         });
     };
 
-    return [ form, change, () => setForm(initialForm)];
+    return [ form, change, setForm, () => setForm(initialForm)];
 };

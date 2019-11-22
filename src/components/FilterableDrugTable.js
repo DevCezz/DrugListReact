@@ -4,11 +4,28 @@ import { ControlBar } from './main/ControlBar';
 import { DrugTable } from './main/DrugTable';
 import { DrugWindow } from './modal/DrugWindow';
 
+import { useForm } from '../hooks/useForm';
+
 export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
     const [drugs, setDrugs] = useState(initialDrugs.concat());
     const [modalWindowTitle, setModalWindowTitle] = useState('Dodaj lek');
     const [submitBtnText, setSubmitBtnText] = useState('Dodaj');
-    const [editDrug, setEditDrug] = useState();
+
+    const [drugForm, change, setDrugForm, resetDrugForm] = useForm({
+        name: '',
+        price: 0,
+        description: '',
+        imageUrl: '',
+        producer: '',
+        sub1name: '',
+        sub1amount: 0,
+        sub2name: '',
+        sub2amount: 0,
+        sub3name: '',
+        sub3amount: 0,
+        formulation: '',
+        drugEffect: ''
+    });
 
     const addDrug = useCallback((drug) => {
         const orderedDrugs = drugs.sort((a, b) => (a.id - b.id));
@@ -19,17 +36,24 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
         }));
     }, [ drugs ]);
 
+    const showFormEditDrug = useCallback((drugId) => {
+        const drug = drugs.find(d => d.id === drugId);
+        setDrugForm(drug);
+        setModalWindowTitle('Edytuj lek: ' + drug.name);
+        setSubmitBtnText('Zatwierdź');
+    }, [ drugs ]);
+
+    const showFormAddDrug = useCallback(() => {
+        resetDrugForm();
+        setModalWindowTitle('Dodaj nowy lek');
+        setSubmitBtnText('Dodaj');
+    });
+
     const replaceDrug = useCallback((drug) => {
         const actualDrugs = drugs.concat();
         const drugIndex = actualDrugs.findIndex(d => d.id === drug.id);
         actualDrugs[drugIndex] = drug;
         setDrugs(actualDrugs);
-    }, [ drugs ]);
-
-    const chooseEditableDrug = useCallback((drugId) => {
-        const drug = drugs.find(d => d.id === drugId);
-        setEditDrug(drug);
-        setModalWindowTitle('Edytuj lek: ' + drug.name)
     }, [ drugs ]);
 
     const deleteDrug = useCallback((drugId) => {
@@ -38,10 +62,10 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
 
     return (
         <div className="container my-5">
-            <ControlBar setSubmitBtnText={ setSubmitBtnText } setEmptyDrug={ setEditDrug } setModalWindowTitle={ setModalWindowTitle } />     
-            <DrugTable drugs={ drugs } setSubmitBtnText={ setSubmitBtnText } setDrugs={ setDrugs } onDeleteDrug={ deleteDrug } 
-                chooseEditableDrug={ chooseEditableDrug } />
-            <DrugWindow onSubmitDrug={ addDrug } submitBtnText={ submitBtnText } modalWindowTitle={ modalWindowTitle } editDrug={ editDrug } />
+            <ControlBar showFormAddDrug={ showFormAddDrug } />
+            <DrugTable drugs={ drugs } setDrugs={ setDrugs } onDeleteDrug={ deleteDrug } showFormEditDrug={ showFormEditDrug } />
+            <DrugWindow onSubmitDrug={ addDrug } submitBtnText={ submitBtnText } modalWindowTitle={ modalWindowTitle }
+                drugForm={ drugForm } change={ change } />
         </div>
     );
 }

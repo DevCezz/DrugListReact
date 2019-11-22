@@ -1,16 +1,10 @@
 import React, { memo } from 'react';
 
-export const ControlBar = memo(({ setSubmitBtnText, setEmptyDrug, setModalWindowTitle }) => {
-    const setUpAddingDrug = () => {
-        setEmptyDrug();
-        setSubmitBtnText('Dodaj');
-        setModalWindowTitle('Dodaj nowy lek');
-    }
-
+export const ControlBar = memo(({ showFormAddDrug }) => {
     return (
         <div>
             <div className="d-flex justify-content-between align-items-start mb-4">
-                <button type="button" id="addDrugBtn" onClick={ setUpAddingDrug } className="btn btn-success" 
+                <button type="button" id="addDrugBtn" onClick={ showFormAddDrug } className="btn btn-success" 
                     data-toggle="modal" data-target="#drugModalForm" >Dodaj</button>
                 
                 <div className="row m-0">
