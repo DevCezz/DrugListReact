@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
+import { ControlBar } from './main/ControlBar';
 import { DrugTable } from './main/DrugTable';
 import { DrugWindow } from './modal/DrugWindow';
 
@@ -70,36 +71,17 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
         setSubmitBtnText('Zatwierdź');
     }, [ drugs ]);
 
-    const filterDrugsByPrice = (limitBelow, limitAbove) => {
+    const filterDrugsByPrice = useCallback((limitBelow, limitAbove) => {
         setLimitBelow(limitBelow);
         setLimitAbove(limitAbove);
 
         const limitedDrugs = drugs.filter(drug => drug.price >= limitBelow && drug.price <= limitAbove);
         setFilteredDrugs(limitedDrugs);
-    };
+    }, [ filteredDrugs ]);
 
     return (
-        <div className="container my-5">
-            <div className="d-flex justify-content-between align-items-start mb-4">
-                <button type="button" id="addDrugBtn" onClick={ showFormAddDrug } className="btn btn-success" 
-                    data-toggle="modal" data-target="#drugModalForm" >Dodaj</button>
-                
-                <div className="row m-0">
-                    <label className="col-lg-3 col-form-label form-control-label text-right px-3">Cena: </label>
-                    <div className="col-lg-4 px-0">
-                        <input className="form-control" type="number" placeholder="Od" 
-                            onChange={ event => filterDrugsByPrice(event.target.value, limitAbove) }
-                            onKeyUp={ event => filterDrugsByPrice(event.target.value, limitAbove) } />
-                    </div>
-                    <label className="col-lg-1 col-form-label text-center px-0"> - </label>
-                    <div className="col-lg-4 px-0">
-                        <input className="form-control" type="number" placeholder="Do" 
-                            onChange={ event => filterDrugsByPrice(limitBelow, event.target.value) }
-                            onKeyUp={ event => filterDrugsByPrice(limitBelow, event.target.value) } />
-                    </div>
-                </div>
-            </div>
-
+        <div className="container">
+            <ControlBar showFormAddDrug={ showFormAddDrug } filterDrugsByPrice={ filterDrugsByPrice } limitBelow={ limitBelow } limitAbove={ limitAbove } />
             <DrugTable drugs={ filteredDrugs } setDrugs={ setFilteredDrugs } onDeleteDrug={ deleteDrug } showFormEditDrug={ showFormEditDrug } />
             <DrugWindow exisitngId={ exisitngId } onAddDrug={ addDrug } onEditDrug={ replaceDrug } submitBtnText={ submitBtnText } 
                 modalWindowTitle={ modalWindowTitle } drugForm={ drugForm } change={ change } />
