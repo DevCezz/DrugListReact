@@ -1,16 +1,7 @@
 import React, { memo } from 'react';
 import '../../css/main.css';
 
-export const DrugTableHeader = memo(({ filterById, filterByName, filterByPrice, filterByProducer, ascFilter }) => {
-    const removeFilterSigns = () => {
-        const thElems = document.getElementsByClassName('filterableColumn');
-        for (let i = 0; i < thElems.length; i++) {
-            let thElem = thElems[i];
-            thElem.classList.remove('headerSortDown');
-            thElem.classList.remove('headerSortUp');
-        }
-    }
-
+export const DrugTableHeader = memo(({ filterById, filterByName, filterByPrice, filterByProducer, ascFilter, removeFilterSigns }) => {
     const addFilterSign = (elem) => {
         let htmlElement = elem.target;
 

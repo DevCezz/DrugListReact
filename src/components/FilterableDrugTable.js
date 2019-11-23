@@ -34,13 +34,24 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
         drugEffect: ''
     });
 
+    const removeFilterSigns = () => {
+        const thElems = document.getElementsByClassName('filterableColumn');
+        for (let i = 0; i < thElems.length; i++) {
+            let thElem = thElems[i];
+            thElem.classList.remove('headerSortDown');
+            thElem.classList.remove('headerSortUp');
+        }
+    }
+
     const deleteDrug = useCallback((drugId) => {
+        removeFilterSigns();
         const newDrugs = drugs.filter(drug => drug.id !== drugId);
         setDrugs(newDrugs);
         setFilteredDrugs(newDrugs);
     }, [ drugs, filteredDrugs ]);
 
     const addDrug = useCallback((drug) => {
+        removeFilterSigns();
         const orderedDrugs = drugs.sort((a, b) => (a.id - b.id));
         const newDrugs = orderedDrugs.concat({
             ...drug,
@@ -52,6 +63,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
     }, [ drugs, filteredDrugs ]);
 
     const replaceDrug = useCallback((drug) => {
+        removeFilterSigns();
         const actualDrugs = drugs.concat();
         const drugIndex = actualDrugs.findIndex(d => d.id === drug.id);
         actualDrugs[drugIndex] = drug;
@@ -80,9 +92,16 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
         setDrugInfoWindowTitle('Karta leku: ' + drug.name);
     });
 
-    const filterDrugsByPrice = useCallback((limitBelow, limitAbove) => {
-        setLimitBelow(limitBelow);
-        setLimitAbove(limitAbove);
+    const filterDrugsByPrice = useCallback((backLimitBelow, backLimitAbove) => {
+        removeFilterSigns();
+
+        if(backLimitAbove === '') {
+            setLimitAbove(Number.POSITIVE_INFINITY);
+        } else {
+            setLimitAbove(backLimitAbove);
+        }
+
+        setLimitBelow(backLimitBelow);
 
         const limitedDrugs = drugs.filter(drug => drug.price >= limitBelow && drug.price <= limitAbove);
         setFilteredDrugs(limitedDrugs);
@@ -92,7 +111,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
         <div className="container">
             <ControlBar showFormAddDrug={ showFormAddDrug } filterDrugsByPrice={ filterDrugsByPrice } limitBelow={ limitBelow } limitAbove={ limitAbove } />
             <DrugTable drugs={ filteredDrugs } setDrugs={ setFilteredDrugs } onDeleteDrug={ deleteDrug } showFormEditDrug={ showFormEditDrug }
-                showInfoDrugWindow={ showInfoDrugWindow } />
+                showInfoDrugWindow={ showInfoDrugWindow } removeFilterSigns={ removeFilterSigns } />
             <DrugWindow exisitngId={ exisitngId } onAddDrug={ addDrug } onEditDrug={ replaceDrug } submitBtnText={ submitBtnText } 
                 modalWindowTitle={ modalWindowTitle } drugForm={ drugForm } change={ change } />
             <DrugInfoWindow drug={ drugInfo } modalWindowTitle={ drugInfoWindowTitle } />
