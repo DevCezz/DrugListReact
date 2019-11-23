@@ -43,8 +43,14 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
         }
     }
 
+    const resetPriceInput = () => {
+        document.getElementById('priceFromInput').value = '';
+        document.getElementById('priceToInput').value = '';
+    }
+
     const deleteDrug = useCallback((drugId) => {
         removeFilterSigns();
+        resetPriceInput();
         const newDrugs = drugs.filter(drug => drug.id !== drugId);
         setDrugs(newDrugs);
         setFilteredDrugs(newDrugs);
@@ -52,10 +58,14 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
 
     const addDrug = useCallback((drug) => {
         removeFilterSigns();
+        resetPriceInput();
         const orderedDrugs = drugs.sort((a, b) => (a.id - b.id));
+
+        const newId = Math.max(...drugs.map(d => d.id)) + 1 === Number.NEGATIVE_INFINITY ? 1 : Math.max(...drugs.map(d => d.id)) + 1;
+
         const newDrugs = orderedDrugs.concat({
             ...drug,
-            id: Math.max(...drugs.map(d => d.id)) + 1,
+            id: newId,
         });
 
         setDrugs(newDrugs);
