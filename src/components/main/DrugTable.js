@@ -3,7 +3,7 @@ import React, { useState, memo } from 'react';
 import { DrugTableHeader } from './DrugTableHeader';
 import { DrugTableBody } from './DrugTableBody';
 
-export const DrugTable = memo(({ drugs, setDrugs, onDeleteDrug, showFormEditDrug }) => {
+export const DrugTable = memo(({ drugs, setDrugs, onDeleteDrug, showFormEditDrug, showInfoDrugWindow }) => {
     const [ascFilter, setAscFilter] = useState(false);
     
     const filterById = () => {
@@ -49,8 +49,8 @@ export const DrugTable = memo(({ drugs, setDrugs, onDeleteDrug, showFormEditDrug
     return (
         <table className="table table-hover mt-3">
             <DrugTableHeader filterById={ filterById } filterByName={ filterByName } filterByPrice={ filterByPrice } 
-                filterByProducer={ filterByProducer } />
-            <DrugTableBody drugs={ drugs } onDeleteDrug={ onDeleteDrug } showFormEditDrug={ showFormEditDrug } />
+                filterByProducer={ filterByProducer } ascFilter={ ascFilter } />
+            <DrugTableBody drugs={ drugs } onDeleteDrug={ onDeleteDrug } showFormEditDrug={ showFormEditDrug } showInfoDrugWindow={ showInfoDrugWindow } />
         </table>
     );
 });

@@ -1,15 +1,18 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 
 import { ControlBar } from './main/ControlBar';
 import { DrugTable } from './main/DrugTable';
 import { DrugWindow } from './modal/DrugWindow';
+import { DrugInfoWindow } from './modal/DrugInfoWindow';
 
 import { useForm } from '../hooks/useForm';
 
-export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
+export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
     const [drugs, setDrugs] = useState(initialDrugs.concat());
     const [filteredDrugs, setFilteredDrugs] = useState(initialDrugs.concat());
     const [modalWindowTitle, setModalWindowTitle] = useState('Dodaj lek');
+    const [drugInfoWindowTitle, setDrugInfoWindowTitle] = useState('');
+    const [drugInfo, setDrugInfo] = useState({});
     const [submitBtnText, setSubmitBtnText] = useState('Dodaj');
     const [exisitngId, setExisitngId] = useState(-1);
     const [limitBelow, setLimitBelow] = useState(0);
@@ -71,6 +74,12 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
         setSubmitBtnText('Zatwierdź');
     }, [ drugs ]);
 
+    const showInfoDrugWindow = useCallback((drugId) => {
+        const drug = drugs.find(d => d.id === drugId);
+        setDrugInfo(drug);
+        setDrugInfoWindowTitle('Karta leku: ' + drug.name);
+    });
+
     const filterDrugsByPrice = useCallback((limitBelow, limitAbove) => {
         setLimitBelow(limitBelow);
         setLimitAbove(limitAbove);
@@ -82,9 +91,11 @@ export const FilterableDrugTable = ({ drugs: initialDrugs }) => {
     return (
         <div className="container">
             <ControlBar showFormAddDrug={ showFormAddDrug } filterDrugsByPrice={ filterDrugsByPrice } limitBelow={ limitBelow } limitAbove={ limitAbove } />
-            <DrugTable drugs={ filteredDrugs } setDrugs={ setFilteredDrugs } onDeleteDrug={ deleteDrug } showFormEditDrug={ showFormEditDrug } />
+            <DrugTable drugs={ filteredDrugs } setDrugs={ setFilteredDrugs } onDeleteDrug={ deleteDrug } showFormEditDrug={ showFormEditDrug }
+                showInfoDrugWindow={ showInfoDrugWindow } />
             <DrugWindow exisitngId={ exisitngId } onAddDrug={ addDrug } onEditDrug={ replaceDrug } submitBtnText={ submitBtnText } 
                 modalWindowTitle={ modalWindowTitle } drugForm={ drugForm } change={ change } />
+            <DrugInfoWindow drug={ drugInfo } modalWindowTitle={ drugInfoWindowTitle } />
         </div>
     );
-}
+});

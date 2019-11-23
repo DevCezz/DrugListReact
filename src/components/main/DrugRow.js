@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 
-export const DrugRow = memo(({ drug, onDeleteDrug, showFormEditDrug }) => {
+export const DrugRow = memo(({ drug, onDeleteDrug, showFormEditDrug, showInfoDrugWindow }) => {
     return (
         <tr>
             <th scope="row">{ drug.id }</th>
-            <td>{ drug.name }</td>
+            <td className="drugInfo" onClick={ () => showInfoDrugWindow(drug.id) } data-toggle="modal" data-target="#drugInfoModalForm">{ drug.name }</td>
             <td>{ drug.price } zł</td>
             <td>{ drug.producer }</td>
             <td>
