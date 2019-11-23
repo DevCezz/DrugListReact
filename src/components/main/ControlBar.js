@@ -1,10 +1,20 @@
 import React, { memo } from 'react';
 
 export const ControlBar = memo(({ showFormAddDrug, filterDrugsByPrice, limitBelow, limitAbove }) => {
+    const handleFormAddDrug = () => {
+        lockConfirmBtn();
+        showFormAddDrug();
+    }
+    
+    const lockConfirmBtn = () => {
+        let confirmBtn = document.getElementById('confirmBtn');
+        confirmBtn.removeAttribute('data-dismiss');
+    }
+
     return (
         <div className="container my-5">
             <div className="d-flex justify-content-between align-items-start mb-4">
-                <button type="button" id="addDrugBtn" onClick={ showFormAddDrug } className="btn btn-success" 
+                <button type="button" id="addDrugBtn" onClick={ handleFormAddDrug } className="btn btn-success" 
                     data-toggle="modal" data-target="#drugModalForm" >Dodaj</button>
                 
                 <div className="row m-0">

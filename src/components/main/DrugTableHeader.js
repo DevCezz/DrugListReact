@@ -6,9 +6,9 @@ export const DrugTableHeader = memo(({ filterById, filterByName, filterByPrice, 
         let htmlElement = elem.target;
 
         if(ascFilter) {
-            htmlElement.classList.add('headerSortUp');
-        } else {
             htmlElement.classList.add('headerSortDown');
+        } else {
+            htmlElement.classList.add('headerSortUp');
         }
     }
 

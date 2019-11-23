@@ -32,3 +32,12 @@ table td, table th {
 .headerSortDown, .headerSortUp {
   padding-right: 10px;
 }
+
+.error {
+    color: red;
+    font-size: 0.8em;
+}
+
+.hideErrorDiv {
+    display: none;
+}

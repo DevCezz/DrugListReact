@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, memo } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 
 import { ControlBar } from './main/ControlBar';
 import { DrugTable } from './main/DrugTable';
@@ -48,7 +48,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
         const newDrugs = drugs.filter(drug => drug.id !== drugId);
         setDrugs(newDrugs);
         setFilteredDrugs(newDrugs);
-    }, [ drugs, filteredDrugs ]);
+    }, [ drugs ]);
 
     const addDrug = useCallback((drug) => {
         removeFilterSigns();
@@ -60,7 +60,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
 
         setDrugs(newDrugs);
         setFilteredDrugs(newDrugs);
-    }, [ drugs, filteredDrugs ]);
+    }, [ drugs ]);
 
     const replaceDrug = useCallback((drug) => {
         removeFilterSigns();
@@ -69,28 +69,46 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
         actualDrugs[drugIndex] = drug;
         setDrugs(actualDrugs);
         setFilteredDrugs(actualDrugs);
-    }, [ drugs, filteredDrugs ]);
+    }, [ drugs ]);
 
-    const showFormAddDrug = useCallback(() => {
+    const showFormAddDrug = () => {
         setExisitngId(-1);
         resetDrugForm();
+        showAllErrors();
         setModalWindowTitle('Dodaj nowy lek');
         setSubmitBtnText('Dodaj');
-    });
+    };
+
+    const showAllErrors = () => {
+        let errors = document.getElementsByClassName('error');
+
+        for(let i = 0; i < errors.length; i++) {
+            errors[i].classList.remove('hideErrorDiv');
+        }
+    };
 
     const showFormEditDrug = useCallback((drugId) => {
         const drug = drugs.find(d => d.id === drugId);
         setExisitngId(drugId);
         setDrugForm(drug);
+        hideAllErrors();
         setModalWindowTitle('Edytuj lek: ' + drug.name);
         setSubmitBtnText('Zatwierdź');
-    }, [ drugs ]);
+    }, [ drugs, setDrugForm ]);
 
-    const showInfoDrugWindow = useCallback((drugId) => {
+    const hideAllErrors = () => {
+        let errors = document.getElementsByClassName('error');
+
+        for(let i = 0; i < errors.length; i++) {
+            errors[i].classList.add('hideErrorDiv');
+        }
+    };
+
+    const showInfoDrugWindow = (drugId) => {
         const drug = drugs.find(d => d.id === drugId);
         setDrugInfo(drug);
         setDrugInfoWindowTitle('Karta leku: ' + drug.name);
-    });
+    };
 
     const filterDrugsByPrice = useCallback((backLimitBelow, backLimitAbove) => {
         removeFilterSigns();
@@ -105,7 +123,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
 
         const limitedDrugs = drugs.filter(drug => drug.price >= limitBelow && drug.price <= limitAbove);
         setFilteredDrugs(limitedDrugs);
-    }, [ filteredDrugs ]);
+    }, [ drugs, limitBelow, limitAbove ]);
 
     return (
         <div className="container">
