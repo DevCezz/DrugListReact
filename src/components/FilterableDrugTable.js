@@ -34,8 +34,9 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
         drugEffect: ''
     });
 
-    const removeFilterSigns = () => {
-        const thElems = document.getElementsByClassName('filterableColumn');
+    const removeSortSigns = () => {
+        const thElems = document.getElementsByClassName('sortableColumn');
+        
         for (let i = 0; i < thElems.length; i++) {
             let thElem = thElems[i];
             thElem.classList.remove('headerSortDown');
@@ -49,7 +50,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
     }
 
     const deleteDrug = useCallback((drugId) => {
-        removeFilterSigns();
+        removeSortSigns();
         resetPriceInput();
         const newDrugs = drugs.filter(drug => drug.id !== drugId);
         setDrugs(newDrugs);
@@ -57,7 +58,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
     }, [ drugs ]);
 
     const addDrug = useCallback((drug) => {
-        removeFilterSigns();
+        removeSortSigns();
         resetPriceInput();
         const orderedDrugs = drugs.sort((a, b) => (a.id - b.id));
 
@@ -73,7 +74,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
     }, [ drugs ]);
 
     const replaceDrug = useCallback((drug) => {
-        removeFilterSigns();
+        removeSortSigns();
         const actualDrugs = drugs.concat();
         const drugIndex = actualDrugs.findIndex(d => d.id === drug.id);
         actualDrugs[drugIndex] = drug;
@@ -121,7 +122,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
     };
 
     const filterDrugsByPrice = useCallback((backLimitBelow, backLimitAbove) => {
-        removeFilterSigns();
+        removeSortSigns();
 
         if(backLimitAbove === '') {
             setLimitAbove(Number.POSITIVE_INFINITY);
@@ -139,7 +140,7 @@ export const FilterableDrugTable = memo(({ drugs: initialDrugs }) => {
         <div className="container">
             <ControlBar showFormAddDrug={ showFormAddDrug } filterDrugsByPrice={ filterDrugsByPrice } limitBelow={ limitBelow } limitAbove={ limitAbove } />
             <DrugTable drugs={ filteredDrugs } setDrugs={ setFilteredDrugs } onDeleteDrug={ deleteDrug } showFormEditDrug={ showFormEditDrug }
-                showInfoDrugWindow={ showInfoDrugWindow } removeFilterSigns={ removeFilterSigns } />
+                showInfoDrugWindow={ showInfoDrugWindow } removeSortSigns={ removeSortSigns } />
             <DrugWindow exisitngId={ exisitngId } onAddDrug={ addDrug } onEditDrug={ replaceDrug } submitBtnText={ submitBtnText } 
                 modalWindowTitle={ modalWindowTitle } drugForm={ drugForm } change={ change } />
             <DrugInfoWindow drug={ drugInfo } modalWindowTitle={ drugInfoWindowTitle } />
