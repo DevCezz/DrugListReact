@@ -1,3 +1,7 @@
+DrugListReact
+--------------
+Projekt wyświetlający leki na potrzeby zaliczenia przedmiotu na studiach.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
